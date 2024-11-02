@@ -3,7 +3,7 @@
 {%block content%}
 <!--Create the login form-->
 <p class="h5">Doctor Sign In</p>
-<hr class="my-4">
+<!--<hr class="my-4">
 <form style="margin:0 auto;">
     <div class="form-group">
       <label for="login">Login</label>
@@ -14,5 +14,19 @@
       <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" style = "width:500px;"> 
     </div>
    <input type="submit" value="Login">
-  </form>
+  </form>-->
+  {%if messages%}
+  <ul class="messages">
+    {%for message in messages%}
+    <li{%if message.tags%} class="{{ message.tags }}"{% endif %}>{{message}}</li>
+    {%endfor%%}
+  </ul>
+  {%endif%}
+  <form method="POST">
+    <div class="form-group">
+  {%csrf_token%}
+  {{form.as_p}}
+<input type="submit" value="Login">
+</div>
+</form>
 {%endblock%}
