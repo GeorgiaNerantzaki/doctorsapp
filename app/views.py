@@ -9,16 +9,21 @@ from django.contrib import messages
 
 #create login view
 def login(request):
-    form = AuthenticationForm(request.POST)
-    if form.is_valid():
-        email = form.cleaned_data.get("email")
-        password =  form.cleaned_data.get("password")
-        user  = authenticate(request, email = email, password = password)
-        if user is not None:
-            login(request,user)
-            redirect('/')
+    form = AuthenticationForm()
+    if request.method=="POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        if not CustomUser.object.filter(email=email).exist():
+        
+         messages(request,'Invalid email or password')
+         return redirect('/')
+        
+        user  = authenticate(request, email = email, password = password)  
+        if user in None:
+            messages(request,'User does not exist')       
         else:
-            form = AuthenticationForm()
+             login(request,user)
+             return redirect('/index')    
     return render(request, 'login.html', {"form": form})
 
 #create register view
