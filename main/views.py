@@ -2,11 +2,22 @@ from django.shortcuts import render,redirect
 from django.http import JsonResponse
 from .models import Appointment
 from django.contrib import messages
+import calendar
+from datetime import datetime
 
 # Create your views here.
 #index page view
-def index_view(request):
-    return render(request,'index.html')
+def index_view(request,year = datetime.now().year, month = datetime.now().month):
+#generate the calendar
+    cal = calendar.month_name(year,month)
+    month_name = calendar.month_name[month]
+    context = {
+        'year':year,
+        'month':month,
+        'month_name':month_name,
+        'cal':cal,
+    }
+    return render(request,'index.html',context)
 
 #retrieve all the callendar appointments
 def appointment_data(request):
@@ -15,7 +26,7 @@ def appointment_data(request):
     return JsonResponse(data,safe=False)
 
 #add a new appointment
-def add_appointmment(request):
+def add_appointment(request):
     if request.method=="POST":
         date = request.POST.get('day')
         time  = request.POST.get('time')

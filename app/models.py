@@ -8,6 +8,8 @@ class CustomUser(AbstractUser):
     surname = models.CharField(max_length=100)
     username = models.CharField(max_length =100, null=True,blank=True, unique=True)
     email = models.EmailField(max_length=150, unique=True)
+    
+    USERNAME_FIELD = 'username'
 
     def __str__(self):
         return self.email

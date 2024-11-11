@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login as auth_login
 from .forms import CustomUserCreationForm
 from .models import CustomUser
 from django.contrib import messages
@@ -11,19 +11,19 @@ from django.contrib import messages
 def login(request):
     form = AuthenticationForm()
     if request.method=="POST":
-        email = request.POST.get("email")
+        username = request.POST.get("username")
         password = request.POST.get("password")
-        if not CustomUser.object.filter(email=email).exist():
+        if not CustomUser.objects.filter(username=username).exists():
         
-         messages(request,'Invalid email or password')
+         messages.error(request,'Invalid username or password')
          return redirect('/')
         
-        user  = authenticate(request, email = email, password = password)  
-        if user in None:
-            messages(request,'User does not exist')       
-        else:
-             login(request,user)
-             return redirect('/index')    
+        user  = authenticate(request, username=username, password = password)  
+        #if user is None:
+         #   messages.error(request,'User does not exist')       
+        #else:
+        login(user)
+        return redirect('main/index')    
     return render(request, 'login.html', {"form": form})
 
 #create register view
