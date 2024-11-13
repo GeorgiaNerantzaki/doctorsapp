@@ -22,8 +22,8 @@ def login(request):
         #if user is None:
          #   messages.error(request,'User does not exist')       
         #else:
-        login(user)
-        return redirect('main/index')    
+        #login(user)
+        return redirect('index/')    
     return render(request, 'login.html', {"form": form})
 
 #create register view
