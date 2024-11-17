@@ -25,7 +25,7 @@
             <tr>
                 {%for day in week%}
                 {%if day > 0 %}
-                <td>{{day}}</td>
+                <td><a href = "{% if selected_date %}{% url 'add_appointment_with_date' selected_date=selected_date %}{% else %}{% url 'add_appointment' %}{% endif %}" ata-toggle="tooltip" data-placement="top" title="Add appointment">{{day}}</a></td>
                 {%endif%}
                 {%endfor%}
             </tr>
@@ -48,7 +48,7 @@
     </table>
   
     <!--Today's appointment appear here-->
-    <p class="h6">Today's appointment</p>
+    <p class="h6">Today's appointments</p>
     {%if todays_appointments%}
     {%for appointment in todays_appointments%}
     <ul><li><strong>Name:</strong>{{patient}}</li>
@@ -61,7 +61,7 @@
     {%endif%}
     <br>
     <!--Tomorrow's appointment appear here-->
-    <p class="h6">Tomorrow's appointment</p>
+    <p class="h6">Tomorrow's appointments</p>
     {%if tomorrow_appointments%}
     {%for appointment in tomorrow_appointments%}
     <ul><li><strong>Name:</strong>{{patient}}</li>
@@ -72,4 +72,7 @@
     {%else%}
     <p>There are no appointments tomorrow</p>
     {%endif%}
+    <br>
+    <a class="btn btn-primary" href="{%url 'add_appointment'%}">New appointment</a>
+    <a class="btn btn-primary" href="{%url 'add_or_update_patient'%}">Add Patient</a>
 {%endblock%}

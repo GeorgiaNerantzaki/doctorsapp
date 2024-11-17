@@ -1,0 +1,76 @@
+{%extends 'layout.html'%}
+{%include 'navbar.html'%}
+{%block title%}Add or update Patient{%endblock%}
+{%block content%}
+<div class = "container mt-5">
+    <!--new patient form-->
+    <h1 class="text-center">Add or update Patient</h1>
+<hr class="my-4">
+<form method="POST" action="" enctype="multipart/form-data">
+    {%csrf_token%}
+    <!--Full name-->
+    <div class="form-group">
+    <label for="full_name">Full Name:</label>
+    <input type="text" id="full_name" name ="full_name" class= "form-control" required>
+    </div>
+    <!--Age-->
+    <div class="form-group">
+    <label for="age">Age:</label>
+    <input type="number" id="age" name="age" class= "form-control" required>
+    </div>
+    <!--Date of birth-->
+    <div class="form-group">
+        <label for="date_of_birth">Date of birth:</label>
+        <input type="date" id="date_of_birth" name="date_of_birth" class= "form-control" required>
+        </div>
+        <!--Phone number-->
+        <div class="form-group">
+            <label for="phone_number">Phone Number:</label>
+            <input type="text" id="phone_number" name ="phone_number" class= "form-control" required>
+            </div>
+            <!--Email-->
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" id="email" name ="email" class= "form-control" required>
+                </div>
+                <!--Insurance Number-->
+                <div class="form-group">
+                    <label for="insurance_number">Insurance Number:</label>
+                    <input type="text" id="insurance_number" name ="insurance_number" class= "form-control" required>
+                    </div>
+                    <!--Current medications-->
+        <div class="form-group">
+            <label for="current_medications">Current medications:</label>
+            <textarea id="current_medications" name="current_medications" class= "form-control" required></textarea>
+            </div>
+            <!--Health Status-->
+            <div class="form-group">
+                <label for="health_status">Health Status:</label>
+                <input type="text" id="health_status" name ="health_status" class= "form-control" required>
+                </div>
+                <!--Symptoms-->
+                <div class="form-group">
+                    <label for="symptoms">Symptoms:</label>
+                    <textarea id="symptoms" name="symptoms" class= "form-control" required></textarea>
+                    </div>
+                    <!--Medical History-->
+                    <div class="form-group">
+                        <label for="medical_history">Medical history:</label>
+                        <textarea id="medical_history" name="medical_history" class= "form-control" required></textarea>
+                        </div>
+                        <!--Document-->
+                        <div class="form-group">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                                </div>
+                                <div class="custom-file">
+                                  <input type="file" class="custom-file-input" id="document" aria-describedby="inputGroupFileAddon01">
+                                  <label class="custom-file-label" for="document">Choose file</label>
+                                </div>
+                              </div>
+                        </div>
+            <input type="submit" class="btn btn-primary" value="Add patient">
+</form>
+</div>
+{%endblock%}
