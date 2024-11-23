@@ -5,6 +5,8 @@ from django.contrib import messages
 import calendar
 from datetime import datetime,timedelta
 from .forms import AddPatientForm
+from .utils import get_calendar_service
+import googleapiclient.errors
 
 # Create your views here.
 #index page view
@@ -93,6 +95,56 @@ def add_or_update_patient(request):
                                   medical_history=medical_history,
                                   document=document)
             new_patient.save()
+            new_patient.doctor.add(request.user)
             messages.success('New patient succassfully updated or added')
     return render(request,'addorupdatepatient.html')
-            
+
+
+#retrieving patients list from the database
+def patient_list(request):
+    patients = Patient.objects.filter(doctor = request.user).all()
+    return render(request,'patientlist.html',{'patients':patients})
+
+def calendar(request):
+    return render(request,'calendar.html')
+
+def create_event(request):
+    service = get_calendar_service()
+
+    event = {
+        'summary': 'Sample Event',
+        'location': '123 Example St, City',
+        'description': 'A sample event created through Django.',
+        'start': {
+            'dateTime': (datetime.now() + timedelta(days=1)).isoformat(),
+            'timeZone': 'America/Los_Angeles',
+        },
+        'end': {
+            'dateTime': (datetime.now() + timedelta(days=1, hours=1)).isoformat(),
+            'timeZone': 'America/Los_Angeles',
+        },
+    }
+
+    try:
+        event = service.events().insert(calendarId='primary', body=event).execute()
+        return redirect('calendar')
+    except googleapiclient.errors.HttpError as error:
+        return render(request, 'error.html', {'error': str(error)})
+
+def list_events(request):
+    service = get_calendar_service()
+    now = datetime.utcnow().isoformat() + 'Z'
+    events_result = service.events().list(calendarId='primary', timeMin=now,
+                                          maxResults=10, singleEvents=True,
+                                          orderBy='startTime').execute()
+    events = events_result.get('items', [])
+    return render(request, 'events.html', {'events': events})
+
+def delete_event(request, event_id):
+    service = get_calendar_service()
+    try:
+        service.events().delete(calendarId='primary', eventId=event_id).execute()
+        return redirect('list_events')
+    except googleapiclient.errors.HttpError as error:
+        return render(request, 'error.html', {'error': str(error)})
+

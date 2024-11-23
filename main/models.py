@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from app.models import CustomUser
 
 # Create your models here.
 #define appointment model
@@ -24,7 +25,8 @@ class Patient(models.Model):
     medication_history = models.TextField('Medication history',help_text="Medication history")
     health_status = models.CharField('Health status or diagnosis', max_length=200)
     symptoms = models.TextField('Symptoms', help_text="Symptoms")
-    medical_history = models.TextField('Medical history', help_text="Medical history")  
+    medical_history = models.TextField('Medical history', help_text="Medical history")
+    doctor = models.ManyToManyField(CustomUser) 
     def __str__(self):
         return self.full_name
     

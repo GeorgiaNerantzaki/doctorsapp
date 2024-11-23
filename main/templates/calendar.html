@@ -1,0 +1,8 @@
+{%extends 'layout.html'%}
+{%block title%}Calendar{%endblock%}
+{%block content%}
+{% include 'navbar.html' %}
+<o class="h1"> Calendar</p>
+<a href="{% url 'create_event' %}">Create Event</a>
+<a href="{% url 'list_events' %}">View Events</a>
+{%endblock%}
