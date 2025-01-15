@@ -8,7 +8,7 @@ from django.conf.urls.static import static
 urlpatterns = [path("index/",lambda request: redirect(reverse('index_view', kwargs={'month': datetime.now().month,'year': datetime.now().year}))),
                path("index/<int:month>/<int:year>/", views.index_view, name="index_view"),
                #path("appointment_data/", views.appointment_data, name= "appointment_data"),
-               path("add_appointment/",views.add_appointment, {'selected_date': None}, name="add_appointment"),
+               path("add_appointment/",views.add_appointment, name="add_appointment"),
                path("add_appointment/<int:year>/<int:month>/<int:day>/",views.add_appointment, name="add_appointment"),
                path("add_or_update_patient/",views.add_or_update_patient, name="add_or_update_patient"),
                path("add_or_update_patient/<int:patient_id>",views.add_or_update_patient, name="add_or_update_patient"),
