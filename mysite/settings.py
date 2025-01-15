@@ -125,4 +125,3 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'app.CustomUser'
 #path to google api credentials
-#GOOGLE_CREDENTIALS_PATH = os.path.join(BASE_DIR, 'client_secret_1095938452235-agtcg272cs9noctrh4ah3dkei795kup5.apps.googleusercontent.com.json')
