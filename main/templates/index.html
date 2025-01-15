@@ -5,7 +5,8 @@
 <!--Calendar display-->
 <div class="container mt-5">
     <!--calendar head respresenting days,month and year-->
-    <h1 class="text center">{{month}}/{{year}}</h1>
+    {% if cal %}
+    <h1 class="text-center">{{month}}/{{year}}</h1>
     <hr class="my-4">
     <table class="table-bordered text-center" style="border-style:solid;">
         <thead>
@@ -20,17 +21,35 @@
             </tr>
         </thead>
         <!--calendar days-->
-        <tbody>
-            {%for week in cal%}
-            <tr>
-                {%for day in week%}
-                {%if day > 0 %}
-                <td><a href = "{% if selected_date %}{% url 'add_appointment_with_date' selected_date=selected_date %}{% else %}{% url 'add_appointment' %}{% endif %}" ata-toggle="tooltip" data-placement="top" title="Add appointment">{{day}}</a></td>
-                {%endif%}
-                {%endfor%}
-            </tr>
-            {%endfor%}
-        </tbody>
+    <tbody>
+        {% for week in cal %}
+        <tr>
+            {% for day in week %}
+            {% if day > 0 %}
+            {% if day in appointments_by_day %}
+                <td style="background-color: aqua;">
+                    <a href="{%url 'add_appointment' year=year month=month day=day %}" data-toggle="tooltip" data-placement="top" title="Add appointment"
+                       >
+                        {{ day }}
+                    </a>
+                </td>
+            {% else %}
+                <td>
+                    <a href="{% url 'add_appointment' year=year month=month day=day %}" data-toggle="tooltip" data-placement="top" title="Add appointment">
+                        {{ day }}
+                    </a>
+                </td>
+            {% endif %}
+            {% else %}
+            <td></td>
+            {% endif %}
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+{% else %}
+    <p>No calendar data available.</p>
+{% endif %}
           <!--navigation links for next year or previous year-->
     <div class="container mt-5">
         {%if month > 1 %}
@@ -39,7 +58,7 @@
         <a class="btn btn-primary" href="{%url 'index_view' year=year|add:'-1' month=12%}" style="margin-left:0px; margin-right:-5px">Previous</a>
         {%endif%}
         {%if month < 12 %}
-        <a class="btn btn-primary" href="{%url 'index_view' year=year month=month|add:'1' %}" style="margin-left: 55px;">Next</a>
+         <a class="btn btn-primary" href="{%url 'index_view' year=year month=month|add:'1' %}" style="margin-left: 55px;">Next</a>
         {%else%}
         <a class="btn btn-primary" href="{%url 'index_view' year=year|add:'1' month=1%}" style="margin-left: 55px;">Next</a>
         {%endif%}
@@ -51,10 +70,16 @@
     <p class="h6">Today's appointments</p>
     {%if todays_appointments%}
     {%for appointment in todays_appointments%}
-    <ul><li><strong>Name:</strong>{{patient}}</li>
-        <li><strong>Time:</strong>{{time}}</li> 
-        <li><strong>Notes:</strong>{{notes}}</li>
-    </u>
+    <ul><li><strong>Name:</strong>{{appointment.patient}}</li>
+        <li><strong>Time:</strong>{{appointment.time}}</li> 
+        <li><strong>Notes:</strong>{{appointment.notes}}</li>
+        <!--Cancelation button-->
+        <form method="POST" action="{% url 'cancel_appointment' appointment.id %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Cancel</button>
+        </form>
+    </ul>
+    <hr class="my-4">
     {%endfor%}
     {%else%}
     <p>There are no appointments today</p>
@@ -64,10 +89,16 @@
     <p class="h6">Tomorrow's appointments</p>
     {%if tomorrow_appointments%}
     {%for appointment in tomorrow_appointments%}
-    <ul><li><strong>Name:</strong>{{patient}}</li>
-        <li><strong>Time:</strong>{{time}}</li> 
-        <li><strong>Notes:</strong>{{notes}}</li>
-    </u>
+    <ul><li><strong>Name:</strong>{{appointment.patient}}</li>
+        <li><strong>Time:</strong>{{appointment.time}}</li> 
+        <li><strong>Notes:</strong>{{appointment.notes}}</li>
+        <!--Cancelation button-->
+        <form method="POST" action="{% url 'cancel_appointment' appointment.id %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Cancel</button>
+        </form>
+    </ul>
+    <hr class="my-4">
     {%endfor%}
     {%else%}
     <p>There are no appointments tomorrow</p>

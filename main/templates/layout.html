@@ -7,8 +7,11 @@
   {% bootstrap_javascript %}
 </head>
 <body>
-
-
+  {% include "navbar.html" %}
+  <div class="container">
+      {% block content %}
+      {% endblock %}
+  </div>
   {% block content %}
   {% endblock %}
 </div>

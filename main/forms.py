@@ -1,5 +1,5 @@
 from django import forms
-from .models import Appointment,Patient,Document
+from .models import Appointment,Patient
 
 #form to add appointments
 class AddAppointmentForm(forms.ModelForm):
@@ -11,5 +11,4 @@ class AddAppointmentForm(forms.ModelForm):
 class AddPatientForm(forms.ModelForm):
     class Meta:
         model_one = Patient
-        model_two = Document
-        fields = ['full_name','age','date_of_birth','phone_number','email','insurance_number','current_medication','medication_history','health_status','symptoms','medical_history','document']
+        fields = ['full_name','age','date_of_birth','phone_number','email','address','insurance_number','current_medication','medication_history','health_status','symptoms','medical_history','document']

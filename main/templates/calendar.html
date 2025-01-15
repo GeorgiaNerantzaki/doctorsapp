@@ -3,6 +3,31 @@
 {%block content%}
 {% include 'navbar.html' %}
 <o class="h1"> Calendar</p>
+    <hr class="my-4">
+    <table class="table-bordered text-center" style="border-style:solid;">
+        <thead>
+            <tr>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+            <tr>
+                <td>{{ event.summary }}</td>
+                <td>{{ event.description }}</td>
+                <td>{{ event.start.dateTime|date:"D, M d Y H:i" }}</td>
+                <td>{{ event.end.dateTime|date:"D, M d Y H:i" }}</td>
+                <td>
+                    <a href="{% url 'delete_event' event.id %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
 <a href="{% url 'create_event' %}">Create Event</a>
 <a href="{% url 'list_events' %}">View Events</a>
 {%endblock%}

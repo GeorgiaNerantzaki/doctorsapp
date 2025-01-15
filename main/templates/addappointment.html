@@ -1,7 +1,7 @@
 {%extends 'layout.html'%}
-{%include 'navbar.html'%}
 {%block title%}New Appointment{%endblock%}
 {%block content%}
+{%include 'navbar.html'%}
 <div class = "container mt-5">
     <!--new appointment form-->
     <h1 class="text-center">New appointment</h1>
@@ -10,7 +10,7 @@
     {%csrf_token%}
     <div class="form-group">
     <label for="date">Date</label>
-    <input type="date" id="date" name ="day" class= "form-control" value="{{selected_date}}" required>
+    <input type="date" id="date" name ="date" class= "form-control" value="{{ selected_date|date:'Y-m-d' }}" required>
     </div>
     <div class="form-group">
     <label for="time">Time</label>
@@ -26,5 +26,22 @@
             </div>
             <input type="submit" class="btn btn-primary" value="Add appointment">
 </form>
+<p class="h6">Appointments:</p>
+{%if appointments%}
+{%for appointment in appointments%}
+<ul><li><strong>Name:</strong>{{appointment.patient}}</li>
+    <li><strong>Time:</strong>{{appointment.time}}</li> 
+    <li><strong>Notes:</strong>{{appointment.notes}}</li>
+    <!--Cancelation button-->
+    <form method="POST" action="{% url 'cancel_appointment' appointment.id %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Cancel</button>
+    </form>
+</ul>
+<hr class="my-4">
+{%endfor%}
+{%else%}
+<p>No appointments on this day</p>
+{%endif%}
 </div>
 {%endblock%}

@@ -11,7 +11,7 @@ class Appointment(models.Model):
     notes = models.TextField('Notes', help_text="Notes",max_length=200, blank=True,null=True)
     
     def __str__(self):
-        return self.day
+        return f"Appointment for {self.patient} on {self.date} at {self.time}"
     
 #define patient model
 class Patient(models.Model):
@@ -19,6 +19,7 @@ class Patient(models.Model):
     age = models.IntegerField('Age')
     date_of_birth = models.DateField('Date of birth', help_text = "Date of birth")
     phone_number = models.CharField('Phone number',max_length=200)
+    address = models.CharField('Address',max_length=200,default=None,null=True,blank=True)
     email = models.CharField('Email',max_length=200,unique=True)
     insurance_number = models.CharField('Insurance number',max_length=200,unique=True)
     current_medications = models.TextField('Current medications',help_text="Current medications")
@@ -26,15 +27,16 @@ class Patient(models.Model):
     health_status = models.CharField('Health status or diagnosis', max_length=200)
     symptoms = models.TextField('Symptoms', help_text="Symptoms")
     medical_history = models.TextField('Medical history', help_text="Medical history")
-    doctor = models.ManyToManyField(CustomUser) 
+    document=models.FileField(upload_to='documents/', null=True, blank=True)
+    doctor = models.ForeignKey(CustomUser, on_delete=models.CASCADE,default=None,null=True,blank=True)
     def __str__(self):
         return self.full_name
     
     
 #define document model and the relationship with the patient
-class Document(models.Model):
+"""class Document(models.Model):
     filename = models.CharField('Filename',max_length=200)
     patient = models.ManyToManyField(Patient)
     def __str__(self):
-        return self.filename
+        return self.filename"""
 

@@ -1,76 +1,90 @@
 {%extends 'layout.html'%}
-{%include 'navbar.html'%}
-{%block title%}Add or update Patient{%endblock%}
+{%block title%}Add  Patient{%endblock%}
 {%block content%}
+{%include 'navbar.html'%}
 <div class = "container mt-5">
     <!--new patient form-->
-    <h1 class="text-center">Add or update Patient</h1>
+    <h1 class="text-center">Add  Patient</h1>
 <hr class="my-4">
+<pre>{{ patient|default:"No patient data" }}</pre>
 <form method="POST" action="" enctype="multipart/form-data">
     {%csrf_token%}
     <!--Full name-->
     <div class="form-group">
     <label for="full_name">Full Name:</label>
-    <input type="text" id="full_name" name ="full_name" class= "form-control" required>
+    <input type="text" id="full_name" name ="full_name" class= "form-control" value="" required>
+    {%if patient%}{{patient.full_name}}{%endif%}
     </div>
     <!--Age-->
     <div class="form-group">
     <label for="age">Age:</label>
-    <input type="number" id="age" name="age" class= "form-control" required>
+    <input type="number" id="age" name="age" class= "form-control" value="" required>
+    {%if patient%}{{patient.age}}{%endif%}
     </div>
     <!--Date of birth-->
     <div class="form-group">
         <label for="date_of_birth">Date of birth:</label>
-        <input type="date" id="date_of_birth" name="date_of_birth" class= "form-control" required>
+        <input type="date" id="date_of_birth" name="date_of_birth" class= "form-control" value="" required>
+        {%if patient%}{{patient.date_of_birth}}{%endif%}
         </div>
         <!--Phone number-->
         <div class="form-group">
             <label for="phone_number">Phone Number:</label>
-            <input type="text" id="phone_number" name ="phone_number" class= "form-control" required>
+            <input type="text" id="phone_number" name ="phone_number" class= "form-control" value="" required>
+            {%if patient%}{{patient.phone_number}}{%endif%}
             </div>
+             <!--Adress-->
+             <div class="form-group">
+                <label for="address">Address:</label>
+                <input type="text" id="address" name ="address" class= "form-control" value="" required>
+                {%if patient%}{{patient.address}}{%endif%}
+                </div>
             <!--Email-->
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="text" id="email" name ="email" class= "form-control" required>
+                <input type="text" id="email" name ="email" class= "form-control"  value="" required>
+                {%if patient%}{{patient.email}}{%endif%}
                 </div>
                 <!--Insurance Number-->
                 <div class="form-group">
                     <label for="insurance_number">Insurance Number:</label>
-                    <input type="text" id="insurance_number" name ="insurance_number" class= "form-control" required>
+                    <input type="text" id="insurance_number" name ="insurance_number" class= "form-control" value="" required>
+                    {%if patient%}{{patient.insurance_number}}{%endif%}
                     </div>
                     <!--Current medications-->
         <div class="form-group">
             <label for="current_medications">Current medications:</label>
-            <textarea id="current_medications" name="current_medications" class= "form-control" required></textarea>
+            <textarea id="current_medications" name="current_medications" class= "form-control" value="" required>{%if patient%}{{patient.current_medications}}{%endif%}</textarea>
             </div>
+              <!--Medication History-->
+              <div class="form-group">
+                <label for="medication_history">Medication history:</label>
+                <textarea id="medication_history" name="medication_history" class= "form-control" value="" required>{%if patient%}{{patient.medication_history}}{%endif%}</textarea>
+                </div>
             <!--Health Status-->
             <div class="form-group">
-                <label for="health_status">Health Status:</label>
-                <input type="text" id="health_status" name ="health_status" class= "form-control" required>
+                <label for="health_status">Health Status/Diagnosis:</label>
+                <input type="text" id="health_status" name ="health_status" class= "form-control" value="" required>
+                {%if patient%}{{patient.health_status}}{%endif%}
                 </div>
                 <!--Symptoms-->
                 <div class="form-group">
                     <label for="symptoms">Symptoms:</label>
-                    <textarea id="symptoms" name="symptoms" class= "form-control" required></textarea>
+                    <textarea id="symptoms" name="symptoms" class= "form-control" value="" required>{%if patient%}{{patient.symptoms}}{%endif%}</textarea>
                     </div>
                     <!--Medical History-->
                     <div class="form-group">
                         <label for="medical_history">Medical history:</label>
-                        <textarea id="medical_history" name="medical_history" class= "form-control" required></textarea>
-                        </div>
-                        <!--Medication History-->
-                    <div class="form-group">
-                        <label for="medication_history">Medication history:</label>
-                        <textarea id="medication_history" name="medication_history" class= "form-control" required></textarea>
+                        <textarea id="medical_history" name="medical_history" class= "form-control" value="" required>{%if patient%}{{patient.medical_history}}{%endif%}</textarea>
                         </div>
                         <!--Document-->
-                        <div class="form-group">
+                        <div class="form-group" >
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                   <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
                                 </div>
                                 <div class="custom-file">
-                                  <input type="file" class="custom-file-input" id="document" aria-describedby="inputGroupFileAddon01">
+                                  <input type="file" class="custom-file-input" id="document" name="document" aria-describedby="inputGroupFileAddon01">
                                   <label class="custom-file-label" for="document">Choose file</label>
                                 </div>
                               </div>

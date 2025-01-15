@@ -1,0 +1,27 @@
+{%extends 'layout.html'%}
+{%block title%}Patient Info{%endblock%}
+{%block content%}
+{% include 'navbar.html' %}
+<div class="container mt-5">
+    <!--patient details -->
+    <h1 class="text-center">{{patient.full_name}}</h1>
+    <hr class="my-4">
+    <ul><li><strong>Age:</strong>{{patient.age}}</li>
+        <li><strong>Date of Birth:</strong>{{patient.date_of_birth}}</li> 
+        <li><strong>Phone Number:</strong>{{patient.phone_number}}</li>
+        <li><strong>Address:</strong>{{patient.address}}</li>
+        <li><strong>Email:</strong>{{patient.email}}</li>
+        <li><strong>Insurance Number:</strong>{{patient.insurance_number}}</li> 
+        <li><strong>Current medications:</strong>{{patient.current_medications}}</li>
+        <li><strong>Medication History:</strong>{{patient.medication_history}}</li>
+        <li><strong>Health Status/Diagnosis:</strong>{{patient.health_status}}</li> 
+        <li><strong>Symptoms:</strong>{{patient.symptoms}}</li>
+        <li><strong>Medical History:</strong>{{patient.medical_history}}</li>
+        <li><strong>Files:</strong>{% if document_url %}
+            <p><a href="{{ document_url }}" target="_blank">{{patient.document}}</a></p>
+        {% else %}
+            <p>No document uploaded.</p>
+        {% endif %}</li>
+    </ul>
+    <hr class="my-4">
+{%endblock%}

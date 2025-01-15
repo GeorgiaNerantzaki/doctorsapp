@@ -1,12 +1,25 @@
 {%extends 'layout.html'%}
-{%include 'navbar.html'%}
 {%block title%}Add or update Patient{%endblock%}
 {%block content%}
+{%include 'navbar.html'%}
 <div class = "container mt-5">
     {%if patients%}
-    {%for patient in patients%}
-    <a href="#">{{patient.full_name}}</a> <a class="btn btn-primary" href="{%url 'add_or_update_patient'%}">Update details</a>
-    {%endfor%}
+    <table class="table-bordered text-center">
+        <thead>
+            <tr>
+                <th>Patient Full Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <!--patient list-->
+    <tbody>
+        {%for patient in patients%}
+        <tr>
+    <td><a href="{%url 'patient_info' patient.id%}">{{patient.full_name}}</a></td><td> <a class="btn btn-primary" href="{%url 'add_or_update_patient' patient.id %}">See or Update details</a></td>
+        </tr>
+        {%endfor%}
+    </tbody>
+    </table>
     {%else%}
     <p class="h6">No patients to show</p>
     {%endif%}
